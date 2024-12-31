@@ -1,0 +1,135 @@
+<div class="auth-main">
+  <div class="auth-wrapper v3">
+    <div class="auth-form">
+      <div class="auth-header">
+        <a href="javascript:"><img src="assets/images/logo-dark.svg" alt="logo img" /></a>
+      </div>
+      <div class="card my-5">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-end mb-4">
+            <h3 class="mb-0"><b>Sign up</b></h3>
+            <a [routerLink]="['/login']" class="link-primary">Already have an account?</a>
+          </div>
+          <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="firstName">First Name*</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstName"
+                    formControlName="firstName"
+                    placeholder="First Name"
+                  />
+                  @if(signupForm.get('firstName')?.invalid && signupForm.get('firstName')?.touched){
+                    <div class="text-danger mt-2">
+                      <small>First Name is required.</small>
+                    </div>
+                  }
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="lastName">Last Name*</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastName"
+                    formControlName="lastName"
+                    placeholder="Last Name"
+                  />
+                  @if(signupForm.get('lastName')?.invalid && signupForm.get('lastName')?.touched){
+                    <div class="text-danger mt-2">
+                      <small>Last Name is required.</small>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="company">Company*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="company"
+                formControlName="company"
+                placeholder="Company"
+              />
+              @if(signupForm.get('company')?.invalid && signupForm.get('company')?.touched){
+                <div class="text-danger mt-2">
+                  <small>Company is required.</small>
+                </div>
+              }
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="phone">Phone Number*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phone"
+                formControlName="phone"
+                placeholder="Phone Number"
+              />
+              @if(signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid){
+                <div class="text-danger mt-2">
+                  @if(signupForm.get('phone')?.errors?.['required'] || signupForm.get('phone')?.errors?.['pattern']) {
+                    <small>Invalid Phone Number</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="email">Email Address*</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                placeholder="Email Address"
+              />
+              @if(signupForm.get('email')?.touched && signupForm.get('email')?.invalid){
+                <div class="text-danger mt-2">
+                  @if(signupForm.get('email')?.errors?.['required'] || signupForm.get('email')?.errors?.['email']) {
+                    <small>Invalid Email Addressr</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="password">Password*</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                placeholder="Password"
+              />
+              @if(signupForm.get('password')?.touched && signupForm.get('password')?.invalid){
+                <div class="text-danger mt-2">
+                  @if(signupForm.get('phone')?.errors?.['required']) {
+                    <small>Password is Required.</small>
+                  }
+                  @if(signupForm.get('phone')?.errors?.['minlength']) {
+                    <small>Password must be at least 6 characters long.</small>
+                  }
+                </div>
+              }
+            </div>
+            <p class="mt-4 text-sm text-muted">
+              By Signing up, you agree to our
+              <a href="javascript:" class="text-primary">Terms of Service</a>
+              and
+              <a href="javascript:" class="text-primary">Privacy Policy</a>
+            </p>
+            <div class="d-grid mt-3">
+              <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">
+                Create Account
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

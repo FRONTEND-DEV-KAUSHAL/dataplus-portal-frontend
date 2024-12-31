@@ -1,0 +1,179 @@
+<app-card cardTitle="Edit Project">
+  <form [formGroup]="editProjectForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <!-- Project Name -->
+      <div class="col-sm-6 mb-3">
+        <label for="projectName" class="block text-gray-700 font-medium mb-2">Project Name</label>
+        <input
+          id="projectName"
+          class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          formControlName="name"
+          required
+          placeholder="Enter project name" />
+        @if (editProjectForm.get('name')?.invalid && editProjectForm.get('name')?.touched) {
+          <div class="text-danger">
+            Project Name is required.
+          </div>
+        }
+      </div>
+
+      <!-- Client -->
+      <div class="col-sm-6 mb-3">
+        <label for="client" class="block text-gray-700 font-medium mb-2">Client</label>
+        <input
+          id="client"
+          class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          formControlName="clientName"
+          required
+          placeholder="Enter client's name" />
+        @if (editProjectForm.get('clientName')?.invalid && editProjectForm.get('clientName')?.touched) {
+          <div class="text-danger">
+            Client is required.
+          </div>
+        }
+      </div>
+
+      <!-- Project Description -->
+      <div class="col-12 mb-3">
+        <label for="description" class="block text-gray-700 font-medium mb-2">Project Description</label>
+        <textarea
+          id="description"
+          class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          formControlName="description"
+          required
+          rows="4"
+          placeholder="Enter project description"></textarea>
+        @if (editProjectForm.get('description')?.invalid && editProjectForm.get('description')?.touched) {
+          <div class="text-danger">
+            Project Description is required.
+          </div>
+        }
+      </div>
+
+
+      <!-- Budget Type -->
+      <div class="col-sm-6 mb-3">
+        <label for="projectManager" class="block text-gray-700 font-medium mb-2">Budget Type</label>
+        <select
+          id="budgetType"
+          class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          formControlName="budgetType"
+          required>
+          @for (type of budgetType; track type) {
+            <option [value]="type">{{ type }}</option>
+          }
+        </select>
+        @if (editProjectForm.get('budgetType')?.invalid && editProjectForm.get('budgetType')?.touched) {
+          <div class="text-danger">
+            Budget Type is required.
+          </div>
+        }
+      </div>
+      <!-- Budget -->
+      <div class="col-sm-6 mb-3">
+        <label for="budget" class="block text-gray-700 font-medium mb-2">Budget</label>
+        <input
+          id="budget"
+          type="number"
+          class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          formControlName="budget"
+          required
+          placeholder="Enter project budget" />
+        @if (editProjectForm.get('budget')?.invalid && editProjectForm.get('budget')?.touched) {
+          <div class="text-danger">
+            Budget is required.
+          </div>
+        }
+      </div>
+      <!-- Start Date -->
+      <div class="col-sm-6 mb-3">
+        <div class="form-group">
+          <label class="form-label">Start Date</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              formControlName="startDate"
+              ngbDatepicker
+              #startDate="ngbDatepicker"
+              placeholder="Select Start Date"
+            />
+            <button class="btn btn-outline-secondary" type="button" (click)="startDate.toggle()">
+              <i antIcon type="calendar" theme="outline"></i>
+            </button>
+          </div>
+          @if (editProjectForm.get('startDate')?.invalid && editProjectForm.get('startDate')?.touched) {
+            <div class="text-danger">
+              Start Date is required.
+            </div>
+          }
+        </div>
+      </div>
+      <!-- End Date -->
+      <div class="col-sm-6 mb-3">
+        <div class="form-group">
+          <label class="form-label">End Date</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              formControlName="endDate"
+              ngbDatepicker
+              #endDate="ngbDatepicker"
+              placeholder="Select End Date"
+            />
+            <button class="btn btn-outline-secondary" type="button" (click)="endDate.toggle()">
+              <i antIcon type="calendar" theme="outline"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Status -->
+      <div class="mb-3">
+        <label for="status" class="block text-gray-700 font-medium mb-2">Project Status</label>
+        <select
+          id="status"
+          class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          formControlName="status"
+          required>
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+        @if (editProjectForm.get('status')?.invalid && editProjectForm.get('status')?.touched) {
+          <div class="text-danger">
+            Project Status is required.
+          </div>
+        }
+      </div>
+
+      <!-- Submit Button -->
+      <div class="card-footer text-end btn-page">
+        <button type="button" class="btn btn-danger" (click)="open(deleteModal)">
+          Delete
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="editProjectForm.invalid">
+          Update
+        </button>
+
+      </div>
+    </div>
+  </form>
+
+</app-card>
+
+<!-- Modal Content -->
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm Deletion</h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete this item?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="deleteItem(); modal.close()">Delete</button>
+  </div>
+</ng-template>
+
+

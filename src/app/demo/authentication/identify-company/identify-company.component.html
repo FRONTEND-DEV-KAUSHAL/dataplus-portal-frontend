@@ -1,0 +1,48 @@
+<div class="auth-main">
+  <div class="auth-wrapper v3">
+    <div class="auth-form">
+      <div class="auth-header">
+        <a href="javascript:"><img src="assets/images/logo-dark.svg" alt="logo" /></a>
+      </div>
+      <div class="card my-5">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-end mb-4">
+            <h3 class="mb-0"><b>Company</b></h3>
+            <a [routerLink]="['/register']" class="link-primary">Don't have an account?</a>
+          </div>
+          <div class="form-group mb-3">
+            <label class="form-label" for="company">Enter Company Alias</label>
+            <input
+              required
+              [(ngModel)]="company"
+              name="company"
+              type="text"
+              #companyInput="ngModel"
+              class="form-control"
+              placeholder="ex. Google, Amazon"
+              id="company">
+            @if(companyInput.touched && !companyInput.valid) {
+              @if(companyInput.errors && companyInput.errors['required']) {
+                <div class="mt-2 text-danger">
+                  Company is required.
+                </div>
+              }
+            }
+
+          </div>
+          <div class="d-grid mt-4">
+            <button type="button" class="btn btn-primary" (click)="verify()">Verify</button>
+          </div>
+        </div>
+      </div>
+      <div class="auth-footer row">
+        <div class="col my-1">
+          <p class="m-0">
+            Copyright ©
+            <a href="https://codedthemes.com/" target="_blank"></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

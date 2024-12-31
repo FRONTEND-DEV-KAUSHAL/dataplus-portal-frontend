@@ -1,0 +1,28 @@
+.modal-header {
+  background-color: #f8d7da;
+  border-bottom: 1px solid #f5c6cb;
+}
+
+.modal-title {
+  color: #721c24;
+}
+
+.modal-body {
+  font-size: 16px;
+  color: #721c24;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}

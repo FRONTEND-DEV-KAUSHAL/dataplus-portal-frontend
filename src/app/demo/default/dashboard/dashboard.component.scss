@@ -1,0 +1,55 @@
+.card {
+  .card-body.dashboard-card {
+    padding: 18px;
+    padding-bottom: 20px;
+  }
+}
+
+.user-group {
+  img {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    z-index: 2;
+    transition: all 0.1s ease-in-out;
+    border: 2px solid var(--bs-white);
+    + img {
+      margin-left: -14px;
+    }
+    &:hover {
+      z-index: 5;
+    }
+  }
+}
+
+.badge-circle {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* time-tracking.component.css */
+
+/* Table styling */
+table {
+  @apply table-auto border-collapse w-full;
+}
+
+thead th {
+  @apply px-4 py-2 text-left bg-gray-100 border-b border-gray-200 text-sm font-medium text-gray-600;
+}
+
+tbody td {
+  @apply px-4 py-2 border-b border-gray-100;
+}
+
+tbody tr:hover {
+  @apply bg-gray-50;
+}
+
+/* Action Button */
+.btn {
+  @apply px-3 py-1 rounded-md shadow-sm text-sm;
+}

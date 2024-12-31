@@ -1,0 +1,156 @@
+<app-card cardTitle="Create Project">
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <!-- Project Name -->
+          <div class="col-sm-6 mb-3">
+            <label for="name" class="block text-gray-700 font-medium mb-2">Project Name</label>
+            <input
+              id="name"
+              class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              formControlName="name"
+              required
+              placeholder="Enter project name" />
+            @if (projectForm.get('name')?.invalid && projectForm.get('name')?.touched) {
+              <div class="text-danger">
+                Project Name is required.
+              </div>
+            }
+          </div>
+
+          <!-- Client -->
+          <div class="col-sm-6 mb-3">
+            <label for="client" class="block text-gray-700 font-medium mb-2">Client</label>
+            <input
+              id="client"
+              class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              formControlName="clientName"
+              required
+              placeholder="Enter client's name" />
+            @if (projectForm.get('clientName')?.invalid && projectForm.get('clientName')?.touched) {
+              <div class="text-danger">
+                Client is required.
+              </div>
+            }
+          </div>
+
+          <!-- Project Description -->
+          <div class="col-12 mb-3">
+            <label for="description" class="block text-gray-700 font-medium mb-2">Project Description</label>
+            <textarea
+              id="description"
+              class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              formControlName="description"
+              required
+              rows="4"
+              placeholder="Enter project description"></textarea>
+            @if (projectForm.get('description')?.invalid && projectForm.get('description')?.touched) {
+              <div class="text-danger">
+                Project Description is required.
+              </div>
+            }
+          </div>
+
+          <!-- Budget Type -->
+          <div class="col-sm-6 mb-3">
+            <label for="projectManager" class="block text-gray-700 font-medium mb-2">Budget Type</label>
+            <select
+              id="budgetType"
+              class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              formControlName="budgetType"
+              required>
+              @for (type of budgetType; track type) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+            @if (projectForm.get('budgetType')?.invalid && projectForm.get('budgetType')?.touched) {
+              <div class="text-danger">
+                Budget Type is required.
+              </div>
+            }
+          </div>
+          <!-- Budget -->
+          <div class="col-sm-6 mb-3">
+            <label for="budget" class="block text-gray-700 font-medium mb-2">Budget</label>
+            <input
+              id="budget"
+              type="number"
+              class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              formControlName="budget"
+              required
+              placeholder="Enter project budget" />
+            @if (projectForm.get('budget')?.invalid && projectForm.get('budget')?.touched) {
+              <div class="text-danger">
+                Budget is required.
+              </div>
+            }
+          </div>
+          <!-- Start Date -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label class="form-label">Start Date</label>
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  formControlName="startDate"
+                  ngbDatepicker
+                  #startDate="ngbDatepicker"
+                  placeholder="Select Start Date"
+                />
+                <button class="btn btn-outline-secondary" type="button" (click)="startDate.toggle()">
+                  <i antIcon type="calendar" theme="outline"></i>
+                </button>
+              </div>
+              @if (projectForm.get('startDate')?.invalid && projectForm.get('startDate')?.touched) {
+                <div class="text-danger">
+                  Start Date is required.
+                </div>
+              }
+            </div>
+          </div>
+          <!-- End Date -->
+          <div class="col-sm-6 mb-3">
+            <div class="form-group">
+              <label class="form-label">End Date</label>
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  formControlName="endDate"
+                  ngbDatepicker
+                  #endDate="ngbDatepicker"
+                  placeholder="Select End Date"
+                />
+                <button class="btn btn-outline-secondary" type="button" (click)="endDate.toggle()">
+                  <i antIcon type="calendar" theme="outline"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Status -->
+          <div class="col-sm-12 mb-3">
+            <label for="status" class="block text-gray-700 font-medium mb-2">Project Status</label>
+            <select
+              id="status"
+              class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              formControlName="status"
+              required>
+              <option value="Planned">Planned</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+            @if (projectForm.get('status')?.invalid && projectForm.get('status')?.touched) {
+              <div class="text-danger">
+                Project Status is required.
+              </div>
+            }
+          </div>
+
+          <!-- Submit Button -->
+          <div class="card-footer text-end btn-page">
+            <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid">Create</button>
+          </div>
+        </div>
+  </form>
+
+</app-card>
+

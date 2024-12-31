@@ -1,0 +1,107 @@
+<app-card cardTitle="Personal Information">
+  <form [formGroup]="personalInfoForm" (ngSubmit)="onSubmit()">
+    <div class="card">
+      <div class="card-body" style="padding: 20px;">
+        <div class="row">
+          <div class="col-12">
+            <h5>Personal Information</h5>
+            <hr class="mb-4">
+          </div>
+
+          <!-- First Name -->
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input
+                class="form-control"
+                type="text"
+                formControlName="firstName"
+                placeholder="First Name">
+              @if(personalInfoForm.get('firstName')?.invalid && personalInfoForm.get('firstName')?.touched){
+                <div class="text-danger">
+                  First Name is required.
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Last Name -->
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input
+                class="form-control"
+                type="text"
+                formControlName="lastName"
+                placeholder="Last Name">
+              @if (personalInfoForm.get('lastName')?.invalid && personalInfoForm.get('lastName')?.touched){
+                <div class="text-danger">
+                  Last Name is required.
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input
+                class="form-control"
+                type="email"
+                formControlName="email"
+                placeholder="Enter Your Email">
+              @if (personalInfoForm.get('email')?.invalid && personalInfoForm.get('email')?.touched) {
+              <div class="text-danger">
+                Please enter a valid email address.
+              </div>
+              }
+            </div>
+          </div>
+
+
+          <!-- Phone Number -->
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input
+                class="form-control"
+                type="text"
+                formControlName="phone"
+                placeholder="Phone Number">
+              @if (personalInfoForm.get('phone')?.invalid && personalInfoForm.get('phone')?.touched){
+              <div class="text-danger">
+                Phone Number is required.
+              </div>
+              }
+            </div>
+          </div>
+
+          <!-- Company -->
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Company</label>
+              <input
+                class="form-control"
+                type="text"
+                [disabled]="true"
+                formControlName="company"
+                placeholder="company">
+              @if (personalInfoForm.get('company')?.invalid && personalInfoForm.get('company')?.touched){
+                <div class="text-danger">
+                  Company is required.
+                </div>
+              }
+            </div>
+          </div>
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="card-footer text-end btn-page">
+        <button type="button" class="btn btn-outline-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="personalInfoForm.invalid">Save</button>
+      </div>
+    </div>
+    </div>
+  </form>
+</app-card>

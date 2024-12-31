@@ -1,0 +1,44 @@
+.custom_container{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+/* task-management.component.css */
+
+/* Table styling */
+table {
+  @apply table-auto border-collapse w-full;
+}
+
+thead th {
+  @apply px-4 py-2 text-left bg-gray-100 border-b border-gray-200 text-sm font-medium text-gray-600;
+}
+
+tbody td {
+  @apply px-4 py-2 border-b border-gray-100;
+}
+
+tbody tr:hover {
+  @apply bg-gray-50;
+}
+
+/* Dropdown button */
+.btn {
+  @apply px-3 py-1 rounded-md shadow-sm text-sm;
+}
+
+.dropdown-item {
+  @apply px-3 py-1 text-sm cursor-pointer hover:bg-gray-100;
+}
+
+/* Status-specific styles */
+.text-success {
+  @apply text-green-600;
+}
+
+.text-warning {
+  @apply text-yellow-600;
+}
+
+.text-danger {
+  @apply text-red-600;
+}

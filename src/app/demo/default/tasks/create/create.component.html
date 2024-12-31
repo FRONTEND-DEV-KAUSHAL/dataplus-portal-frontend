@@ -1,0 +1,149 @@
+<app-card cardTitle="Create Task">
+  <form [formGroup]="createTaskForm" (ngSubmit)="onSubmit()">
+    <div class="card">
+      <div class="card-body" style="padding: 20px;">
+        <div class="row">
+          <!-- Title -->
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Title</label>
+              <input
+                class="form-control"
+                type="text"
+                formControlName="name"
+                placeholder="Enter task title"
+              />
+              @if(createTaskForm.get('name')?.invalid && createTaskForm.get('name')?.touched){
+                <div class="text-danger">
+                  Title is required.
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Status -->
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select class="form-select" formControlName="status">
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+              @if(createTaskForm.get('status')?.invalid && createTaskForm.get('status')?.touched){
+                <div class="text-danger">
+                  Status is required.
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="col-12">
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <textarea
+                class="form-control"
+                rows="4"
+                formControlName="description"
+                placeholder="Enter task description"
+              ></textarea>
+              @if(createTaskForm.get('description')?.invalid && createTaskForm.get('description')?.touched){
+                <div class="text-danger">
+                  Description is required.
+                </div>
+              }
+            </div>
+          </div>
+
+
+          <!-- Due Date -->
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Due Date</label>
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  formControlName="dueDate"
+                  ngbDatepicker
+                  #dueDate="ngbDatepicker"
+                  placeholder="Select due date"
+                />
+                <button class="btn btn-outline-secondary" type="button" (click)="dueDate.toggle()">
+                  <i antIcon type="calendar" theme="outline"></i>
+                </button>
+              </div>
+              @if(createTaskForm.get('dueDate')?.invalid && createTaskForm.get('dueDate')?.touched){
+                <div class="text-danger">
+                  Due Date is required.
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Project -->
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Project</label>
+              <select class="form-select" formControlName="project">
+                @for (project of projectOptions; track project) {
+                  <option class="dropdown-item" [value]="project._id">
+                    {{ project.name }}
+                  </option>
+                }
+              </select>
+              @if(createTaskForm.get('project')?.invalid && createTaskForm.get('project')?.touched){
+                <div class="text-danger">
+                  Project selection is required.
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="form-group mb-3">
+              <label for="priority" class="form-label">Priority</label>
+              <select
+                class="form-select"
+                id="priority"
+                formControlName="priority"
+              >
+                @for (priority of priorityOptions; track priority) {
+                  <option [value]="priority">{{ priority }}</option>
+                }
+              </select>
+              @if (createTaskForm.get('priority')?.invalid && createTaskForm.get('priority')?.touched) {
+                <div class="text-danger">Priority is required.</div>
+              }
+            </div>
+          </div>
+
+          <!-- Document/Image -->
+          <div class="col-12">
+            <div class="form-group">
+              <label class="form-label">Document/Image</label>
+              <input
+                type="file"
+                class="form-control"
+                (change)="handleFileUpload($event)"
+              />
+              @if(createTaskForm.get('document')?.invalid && createTaskForm.get('document')?.touched){
+                <div class="text-danger">
+                  Document/Image is required.
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="card-footer text-end btn-page">
+        <button type="button" class="btn btn-outline-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="createTaskForm.invalid">
+          Create Task
+        </button>
+      </div>
+    </div>
+  </form>
+</app-card>
