@@ -45,7 +45,7 @@ export class DefaultComponent implements OnInit {
   AnalyticEcommerce: CardTab[] = [
     {
       title: 'Task In Progress',
-      count: 3
+      count: 0
     },
     {
       title: 'Tasks Open',
@@ -53,21 +53,21 @@ export class DefaultComponent implements OnInit {
     },
     {
       title: 'Tasks Closed',
-      count: 211
+      count: 0
     },
     {
       title: 'Total Tasks',
-      count: 219
+      count: 0
     }
   ];
   tasksOverview = {
     week: {
-      tasks: 2,
-      hours: 10
+      tasks: 0,
+      hours: 0
     },
     monthly: {
-      tasks: 3,
-      hours: 15
+      tasks: 0,
+      hours: 0
     }
   };
 
