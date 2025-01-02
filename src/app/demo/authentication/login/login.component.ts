@@ -22,13 +22,11 @@ export default class LoginComponent {
   }
 
   login(){
-    const companyId: string = localStorage.getItem('company');
 
-    if(!companyId || !this.email || !this.password) return;
+    if(!this.email || !this.password) return;
     const payload = {
       email: this.email,
-      password: this.password,
-      companyId
+      password: this.password
     }
     this.authService.login(payload).subscribe((response: {token: string, message: string}) => {
       localStorage.setItem('token', response.token);

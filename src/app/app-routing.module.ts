@@ -13,13 +13,13 @@ const routes: Routes = [
     component: AdminComponent,
     canActivate: [() => {
       const router = inject(Router);
-      const company = localStorage.getItem('company');
+      // const company = localStorage.getItem('company');
       const token = localStorage.getItem('token');
 
-      if (!company) {
-        router.navigate(['/identify-company']);
-        return false;
-      }
+      // if (!company) {
+      //   router.navigate(['/identify-company']);
+      //   return false;
+      // }
 
       if (!token) {
         router.navigate(['/login']);
@@ -72,21 +72,11 @@ const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>  import('./demo/authentication/login/login.component').then((c) => c.default),
-    canActivate: [() => {
-      const router = inject(Router);
-      const company = localStorage.getItem('company');
-      if(company) {
-        return true
-      } else {
-        router.navigate(['/identify-company']);
-        return false;
-      }
-    }]
   },
-  {
-    path: 'identify-company',
-    loadComponent: () => import('./demo/authentication/identify-company/identify-company.component').then(c => c.IdentifyCompanyComponent)
-  },
+  // {
+  //   path: 'identify-company',
+  //   loadComponent: () => import('./demo/authentication/identify-company/identify-company.component').then(c => c.IdentifyCompanyComponent)
+  // },
   {
     path: 'register',
     loadComponent: () => import('./demo/authentication/register/register.component').then(c => c.default)

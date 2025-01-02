@@ -16,7 +16,7 @@ export class NotificationService {
   constructor(private http: HttpClient) { }
 
   getAllNotifications() {
-    return this.http.get(`${this.#apiUrl}/getAll`, {headers: this.apiHeaders}).pipe(
+    return this.http.get(`${this.#apiUrl}/getAll?page=1&limit=1000`, {headers: this.apiHeaders}).pipe(
       catchError(this.handleError)
     );
   }

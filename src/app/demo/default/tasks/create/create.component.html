@@ -118,6 +118,34 @@
             </div>
           </div>
 
+          <div class="col-sm-6 mb-3">
+            <label for="abcd" class="block text-gray-700 font-medium mb-2">Add Members</label>
+            <ng-select
+              [items]="members"
+              [multiple]="true"
+              [closeOnSelect]="false"
+              [searchable]="true"
+              bindLabel="name"
+              placeholder="Select people"
+              [(ngModel)]="selectedMembers"
+              [ngModelOptions]="{standalone: true}">
+            </ng-select>
+          </div>
+
+          <div class="col-sm-6 mb-3">
+            <label for="abcd" class="block text-gray-700 font-medium mb-2">Can add members</label>
+            <ng-select
+              [items]="members"
+              [multiple]="true"
+              [closeOnSelect]="false"
+              [searchable]="true"
+              bindLabel="name"
+              placeholder="Select people"
+              [(ngModel)]="selectedPermitedUsers"
+              [ngModelOptions]="{standalone: true}">
+            </ng-select>
+          </div>
+
           <!-- Document/Image -->
           <div class="col-12">
             <div class="form-group">

@@ -44,6 +44,18 @@ export class TaskService {
       catchError(this.handleError)
     )
   }
+
+  addComment(taskId, payload){
+    return this.http.post(`${this.#apiUrl}/${taskId}/comment/add`,payload, {headers: this.apiHeaders}).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  getAllComments(taskId: string){
+    return this.http.get(`${this.#apiUrl}/${taskId}/comment/all`, {headers: this.apiHeaders }).pipe(
+      catchError(this.handleError)
+    )
+  }
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {

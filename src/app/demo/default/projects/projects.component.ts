@@ -28,7 +28,7 @@ export class ProjectsComponent implements OnInit {
   projects = [];
   totalProjects = 0;
   selectedItemToDelete: string = '';
-
+  userDetails = JSON.parse(localStorage.getItem('user'));
   constructor(
     private iconService: IconService,
     private projectService: ProjectService,

@@ -7,20 +7,25 @@ import { NgbDatepickerModule, NgbInputDatepicker } from '@ng-bootstrap/ng-bootst
 import { CalendarOutline } from '@ant-design/icons-angular/icons';
 import { ProjectService } from '../../../../services/project.service';
 import { Router } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CardComponent, CommonModule, IconModule, NgbDatepickerModule],
+  imports: [FormsModule, ReactiveFormsModule, CardComponent, CommonModule, IconModule, NgbDatepickerModule,NgSelectModule],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
 export class CreateComponent implements OnInit {
   projectForm: FormGroup;
-
+  members = [];
+  selectedMembers: string[] = [];
+  selectedPermitedUsers: string[] = [];
   budgetType = ['Hourly', 'Fixed'];
+  userDetails = JSON.parse(localStorage.getItem('user'));
 
-  constructor(private fb: FormBuilder,  private iconService: IconService, private projectService: ProjectService, private router: Router) {
+  constructor(private fb: FormBuilder,  private iconService: IconService, private projectService: ProjectService, private router: Router, private userService: UserService) {
     this.iconService.addIcon(...[CalendarOutline])
   }
 
@@ -33,15 +38,24 @@ export class CreateComponent implements OnInit {
       budget: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
       endDate: [''],
-      status: ['', [Validators.required]]
+      status: ['', [Validators.required]],
     });
+    this.getAllMembers()
   }
 
   onSubmit(): void {
     if (this.projectForm.valid) {
+      const allUsers = Array.from(new Set([...this.selectedMembers, ...this.selectedPermitedUsers]));
+
+      const members = allUsers.map((user: any) => ({
+        user: user._id,
+        permissions: { canAddUsers: this.selectedPermitedUsers.includes(user) },
+        role : this.selectedPermitedUsers.includes(user) ? 'Manager' : "Developer"
+      }));
+
       let payload = {
         ...this.projectForm.value,
-        company: localStorage.getItem('company'),
+        members: members
       }
       if(this.projectForm.value.startDate){
         const date = this.projectForm.value.startDate
@@ -64,5 +78,13 @@ export class CreateComponent implements OnInit {
         this.router.navigateByUrl('/projects')
       })
     }
+  }
+
+  getAllMembers(){
+    this.userService.getAllUsers(1, 1000).subscribe((res: any) => {
+      console.log(res)
+      const filterData = res.users.filter(user => user._id !== this.userDetails._id)
+      this.members = filterData;
+    })
   }
 }

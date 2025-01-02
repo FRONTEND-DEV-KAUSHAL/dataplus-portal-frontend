@@ -3,11 +3,6 @@
     <div class="card">
       <div class="card-body" style="padding: 20px;">
         <div class="row">
-          <div class="col-12">
-            <h5>Personal Information</h5>
-            <hr class="mb-4">
-          </div>
-
           <!-- First Name -->
           <div class="col-sm-6">
             <div class="form-group">
@@ -59,7 +54,6 @@
             </div>
           </div>
 
-
           <!-- Phone Number -->
           <div class="col-sm-6">
             <div class="form-group">
@@ -77,22 +71,19 @@
             </div>
           </div>
 
-          <!-- Company -->
           <div class="col-sm-6">
-            <div class="form-group">
-              <label class="form-label">Company</label>
-              <input
-                class="form-control"
-                type="text"
-                [disabled]="true"
-                formControlName="company"
-                placeholder="company">
-              @if (personalInfoForm.get('company')?.invalid && personalInfoForm.get('company')?.touched){
-                <div class="text-danger">
-                  Company is required.
-                </div>
-              }
-            </div>
+            <label for="abcd" class="block text-gray-700 font-medium mb-2">Role:</label>
+            <ng-select
+              [items]="['User','Admin']"
+              [multiple]="false"
+              [closeOnSelect]="false"
+              [searchable]="false"
+              bindLabel="name"
+              [disabled]="true"
+              placeholder="Select role"
+              formControlName="role"
+              >
+            </ng-select>
           </div>
       </div>
 

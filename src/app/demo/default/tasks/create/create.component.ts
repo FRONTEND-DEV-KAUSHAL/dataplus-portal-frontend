@@ -8,11 +8,13 @@ import { TaskService } from '../../../../services/task.service';
 import { ProjectService } from '../../../../services/project.service';
 import { FileChangeEvent } from '@angular/compiler-cli/src/perform_watch';
 import { Router } from '@angular/router';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [FormsModule, NgbDatepickerModule, ReactiveFormsModule, CardComponent, IconModule, NgbDropdownModule],
+  imports: [FormsModule, NgbDatepickerModule, ReactiveFormsModule, CardComponent, IconModule, NgbDropdownModule, NgSelectComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -22,9 +24,21 @@ export class CreateComponent implements OnInit {
   selectedDocuments: File[] = [];
   priorityOptions = ['High', 'Medium', 'Low'];
   formSubmitted = false;
+  members = [];
+  selectedMembers: string[] = [];
+  selectedPermitedUsers: string[] = [];
+  userDetails = JSON.parse(localStorage.getItem('user'));
 
-  constructor(private fb: FormBuilder, private iconService: IconService, private taskService: TaskService, private  projectService: ProjectService, private router: Router) {
-    this.iconService.addIcon(...[CalendarOutline])
+
+  constructor(
+    private fb: FormBuilder,
+    private iconService: IconService,
+    private taskService: TaskService,
+    private projectService: ProjectService,
+    private router: Router,
+    private userService: UserService
+  ) {
+    this.iconService.addIcon(...[CalendarOutline]);
   }
 
   ngOnInit(): void {
@@ -37,6 +51,7 @@ export class CreateComponent implements OnInit {
       project: ['', Validators.required]
     });
     this.getProjectList();
+    this.getAllMembers();
   }
 
   onSubmit(): void {
@@ -44,9 +59,18 @@ export class CreateComponent implements OnInit {
 
     // Check if the form is valid
     if (this.createTaskForm.valid) {
+      const allUsers = Array.from(new Set([...this.selectedMembers, ...this.selectedPermitedUsers]));
+
+      const members = allUsers.map((user: any) => ({
+        user: user._id,
+        permissions: { canAddUsers: this.selectedPermitedUsers.includes(user) },
+        role : this.selectedPermitedUsers.includes(user) ? 'Manager' : "Developer"
+      }));
+
       const formValue = {
         ...this.createTaskForm.value,
         document: this.selectedDocuments, // Include selected documents
+        members
       };
 
       const formPayload = new FormData();
@@ -61,18 +85,17 @@ export class CreateComponent implements OnInit {
         } else if (key === 'dueDate') {
           // Convert dueDate to ISO string
           const dueDate = formValue[key];
-          const formattedDate = new Date(
-            dueDate.year,
-            dueDate.month - 1,
-            dueDate.day
-          ).toISOString();
+          const formattedDate = new Date(dueDate.year, dueDate.month - 1, dueDate.day).toISOString();
           formPayload.append('dueDate', formattedDate);
+        } else if(key==='members') {
+          formValue[key].forEach((item: any) => {
+            formPayload.append('members', JSON.stringify(item));
+          })
         } else {
           // Append other fields
           formPayload.append(key, formValue[key]);
         }
       }
-
 
       // Send the FormData to the backend
       this.taskService.createTask(formPayload).subscribe(
@@ -88,15 +111,20 @@ export class CreateComponent implements OnInit {
     }
   }
 
-
-  getProjectList(){
+  getProjectList() {
     this.projectService.getAllProjects(1, 1000).subscribe((res: any) => {
       this.projectOptions = res.projects;
-    })
+    });
   }
 
   handleFileUpload(event: any) {
     const file = event.target.files[0];
     this.selectedDocuments.push(file);
+  }
+  getAllMembers(){
+    this.userService.getAllUsers(1, 1000).subscribe((res: any) => {
+      const filterData = res.users.filter(user => user._id !== this.userDetails._id)
+      this.members = filterData;
+    })
   }
 }

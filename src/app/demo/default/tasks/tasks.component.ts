@@ -32,7 +32,7 @@ export class TasksComponent implements OnInit {
   selectedItemToDelete: string = '';
   // Status options
   statuses: string[] = ['Pending', 'In Progress', 'Completed'];
-
+  userDetails = JSON.parse(localStorage.getItem('user'));
   priorities: string[] = ['High', 'Medium', 'Low'];
 
   constructor(private iconService: IconService, private taskService: TaskService, private modalService: NgbModal) {

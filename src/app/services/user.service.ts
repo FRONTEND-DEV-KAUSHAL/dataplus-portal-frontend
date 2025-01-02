@@ -20,6 +20,12 @@ export class UserService {
       catchError(this.handleError)
     )
   }
+
+  getAllUsers(page:number, limit: number) {
+    return this.http.get(`${this.#apiUrl}/all?page=${page}&limit=${limit}`,  {headers: this.apiHeaders }).pipe(
+      catchError(this.handleError)
+    );
+  }
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {

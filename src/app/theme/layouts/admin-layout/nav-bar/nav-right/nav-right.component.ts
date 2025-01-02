@@ -145,7 +145,7 @@ export class NavRightComponent implements OnInit {
   }
 
   logout(){
-    this.router.navigate(['/identify-company']);
+    this.router.navigate(['/login']);
     localStorage.clear();
   }
 }

@@ -1,0 +1,30 @@
+.chip {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px;
+  border: 1px solid #007bff;
+  border-radius: 16px;
+  cursor: pointer;
+  background-color: #f1f1f1;
+}
+
+.chip.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+.remove-chip {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.selected-chips {
+  margin-top: 10px;
+}
+
+.selected-chips input {
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 5px;
+}
