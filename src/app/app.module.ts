@@ -8,10 +8,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './theme/shared/shared.module';
 import LoginComponent from './demo/authentication/login/login.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, SharedModule, BrowserAnimationsModule, LoginComponent],
+  imports: [BrowserModule, AppRoutingModule, SharedModule, BrowserAnimationsModule, LoginComponent, ToastrModule.forRoot()],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
