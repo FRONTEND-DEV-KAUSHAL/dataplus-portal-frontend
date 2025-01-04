@@ -26,6 +26,18 @@ export class UserService {
       catchError(this.handleError)
     );
   }
+
+  createUser(payload:any){
+    return this.http.post(`${this.#apiUrl}/create`, payload, {headers: this.apiHeaders}).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  getUserById(userId:string){
+    return this.http.get(`${this.#apiUrl}/${userId}`, {headers: this.apiHeaders}).pipe(
+      catchError(this.handleError)
+    )
+  }
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {

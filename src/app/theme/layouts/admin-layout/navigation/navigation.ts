@@ -4,7 +4,7 @@ export interface NavigationItem {
   type: 'item' | 'collapse' | 'group';
   translate?: string;
   icon?: string;
-  hidden?: boolean;
+  hidden?: any;
   url?: string;
   classes?: string;
   groupClasses?: string;
@@ -51,7 +51,7 @@ export const NavigationItems: NavigationItem[] = [
         url: '/projects',
         icon: 'folder',
         breadcrumbs: true
-      }
+      },
     ]
   },
   // {

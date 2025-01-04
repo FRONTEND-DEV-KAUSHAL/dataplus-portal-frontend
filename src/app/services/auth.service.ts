@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { catchError, Observable, throwError, tap } from 'rxjs';
+import { catchError, Observable, throwError, tap, BehaviorSubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -9,7 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AuthService {
   #apiUrl = `${environment.apiUrl}/auth`;
-
+  private roleSubject = new BehaviorSubject<string | null>(null); // Emits the role
+  public role$: Observable<string | null> = this.roleSubject.asObservable(); // Expose as observable
   constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   identifyCompany(payload: { company: string }) {
@@ -46,15 +47,22 @@ export class AuthService {
   }
 
   getLoggedInUser() {
-    return this.http.get(`${this.#apiUrl}/me`, {
+    return this.http.get<{ role: string; [key: string]: any }>(`${this.#apiUrl}/me`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     }).pipe(
-      tap(response => localStorage.setItem('user', JSON.stringify(response))),
+      tap((response) => {
+        // Save user data in local storage
+        localStorage.setItem('user', JSON.stringify(response));
+
+        // Emit the user's role to the observable
+        this.roleSubject.next(response.role);
+      }),
       catchError(this.handleError.bind(this))
     );
   }
+
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';

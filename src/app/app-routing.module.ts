@@ -63,6 +63,48 @@ const routes: Routes = [
         loadComponent: () => import('./demo/default/projects/edit/edit.component').then((c) => c.EditComponent)
       },
       {
+        path: 'users',
+        loadComponent: () => import('./demo/default/users/users.component').then((c) => c.UsersComponent),
+        canActivate: [() => {
+          const router = inject(Router);
+          const user = JSON.parse(localStorage.getItem('user'));
+
+          if (user.role !== 'SuperAdmin') {
+            router.navigate(['/dashboard']);
+            return false;
+          };
+          return true;
+        }]
+      },
+      {
+        path: 'users/create',
+        loadComponent: () => import('./demo/default/users/create/create.component').then((c) => c.CreateComponent),
+        canActivate: [() => {
+          const router = inject(Router);
+          const user = JSON.parse(localStorage.getItem('user'));
+
+          if (user.role !== 'SuperAdmin') {
+            router.navigate(['/dashboard']);
+            return false;
+          };
+          return true;
+        }]
+      },
+      {
+        path: 'users/edit/:id',
+        loadComponent: () => import('./demo/default/users/edit/edit.component').then((c) => c.EditComponent),
+        canActivate: [() => {
+          const router = inject(Router);
+          const user = JSON.parse(localStorage.getItem('user'));
+
+          if (user.role !== 'SuperAdmin') {
+            router.navigate(['/dashboard']);
+            return false;
+          };
+          return true;
+        }]
+      },
+      {
         path: 'profile',
         loadComponent: () =>  import('./demo/default/profile/profile.component').then((c) => c.ProfileComponent)
       }

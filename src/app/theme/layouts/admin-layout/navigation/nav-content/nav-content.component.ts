@@ -1,5 +1,5 @@
 // Angular import
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule, Location, LocationStrategy } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -23,8 +23,9 @@ import {
   ProfileOutline,
   BgColorsOutline,
   SnippetsOutline,
-  AntDesignOutline, FolderOutline
+  AntDesignOutline, FolderOutline,UsergroupAddOutline
 } from '@ant-design/icons-angular/icons';
+import { AuthService } from '../../../../../services/auth.service';
 
 @Component({
   selector: 'app-nav-content',
@@ -33,7 +34,7 @@ import {
   templateUrl: './nav-content.component.html',
   styleUrls: ['./nav-content.component.scss']
 })
-export class NavContentComponent implements OnInit {
+export class NavContentComponent implements OnInit, AfterViewInit {
   // public props
   @Output() NavCollapsedMob: EventEmitter<string> = new EventEmitter();
 
@@ -41,7 +42,6 @@ export class NavContentComponent implements OnInit {
 
   // version
   title = 'Demo application for version numbering';
-  currentApplicationVersion = environment.appVersion;
 
   navigation = NavigationItems;
   windowWidth = window.innerWidth;
@@ -50,7 +50,8 @@ export class NavContentComponent implements OnInit {
   constructor(
     private location: Location,
     private locationStrategy: LocationStrategy,
-    private iconService: IconService
+    private iconService: IconService,
+    private authService: AuthService,
   ) {
     this.iconService.addIcon(
       ...[
@@ -64,7 +65,8 @@ export class NavContentComponent implements OnInit {
         AntDesignOutline,
         ChromeOutline,
         QuestionOutline,
-        FolderOutline
+        FolderOutline,
+        UsergroupAddOutline
       ]
     );
     this.navigations = NavigationItems;
@@ -75,6 +77,28 @@ export class NavContentComponent implements OnInit {
     if (this.windowWidth < 1025) {
       (document.querySelector('.coded-navbar') as HTMLDivElement).classList.add('menupos-static');
     }
+    this.authService.role$.subscribe(role => {
+      if(role === 'SuperAdmin') {
+        if(this.navigations[0].children[this.navigations[0].children.length - 1].id === 'users') return
+        this.navigations[0].children.push({
+          id: 'users',
+          title: "Users",
+          type: 'item',
+          classes: 'nav-item',
+          url: '/users',
+          icon: 'usergroup-add',
+          breadcrumbs: true,
+        });
+      }
+        else {
+          if(this.navigations[0].children[this.navigations[0].children.length - 1].id === 'users')
+            this.navigations[0].children.pop();
+        }
+    })
+  }
+
+  ngAfterViewInit() {
+
   }
 
   fireOutClick() {

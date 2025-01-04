@@ -1,0 +1,99 @@
+<app-card cardTitle="Create User">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <!-- User Name -->
+      <div class="col-sm-6 mb-3">
+        <label for="name" class="block text-gray-700 font-medium mb-2">User Name</label>
+        <input
+          id="name"
+          class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          formControlName="name"
+          required
+          placeholder="Enter user name" />
+        @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+          <div class="text-danger">
+            Name is required.
+          </div>
+        }
+      </div>
+
+      <!-- Budget Type -->
+      <div class="col-sm-6 mb-3">
+        <label for="role" class="block text-gray-700 font-medium mb-2">Role</label>
+        <select
+          id="role"
+          class="form-control w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          formControlName="role"
+          required>
+          @for (type of roles; track type) {
+            <option [value]="type">{{ type }}</option>
+          }
+        </select>
+        @if (userForm.get('role')?.invalid && userForm.get('role')?.touched) {
+          <div class="text-danger">
+            Role is required.
+          </div>
+        }
+      </div>
+
+      <!-- Email -->
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input
+            class="form-control"
+            type="email"
+            formControlName="email"
+            placeholder="Enter Your Email">
+          @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+            <div class="text-danger">
+              Please enter a valid email address.
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input
+            class="form-control"
+            type="text"
+            formControlName="phone"
+            placeholder="Phone Number">
+          @if (userForm.get('phone')?.invalid && userForm.get('phone')?.touched){
+            <div class="text-danger">
+              Phone Number is required.
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input
+            class="form-control"
+            type="text"
+            formControlName="password"
+            placeholder="Enter User Password">
+          @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
+            <div class="text-danger">
+              Please enter a valid password.
+            </div>
+          }
+        </div>
+      </div>
+
+
+      <!-- Submit Button -->
+      <div class="card-footer text-end btn-page">
+        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Create</button>
+      </div>
+    </div>
+  </form>
+
+</app-card>
+

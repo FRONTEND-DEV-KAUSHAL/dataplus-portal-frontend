@@ -141,6 +141,7 @@ export class NavRightComponent implements OnInit {
   getUserProfile(){
     this.authService.getLoggedInUser().subscribe((res) => {
       this.userDetails = res;
+
     })
   }
 
