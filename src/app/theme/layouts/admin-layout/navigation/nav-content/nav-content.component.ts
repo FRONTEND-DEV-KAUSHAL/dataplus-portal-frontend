@@ -77,7 +77,7 @@ export class NavContentComponent implements OnInit, AfterViewInit {
     if (this.windowWidth < 1025) {
       (document.querySelector('.coded-navbar') as HTMLDivElement).classList.add('menupos-static');
     }
-    this.authService.role$.subscribe(role => {
+    this.authService.role$.subscribe(role =>{
       if(role === 'SuperAdmin') {
         if(this.navigations[0].children[this.navigations[0].children.length - 1].id === 'users') return
         this.navigations[0].children.push({

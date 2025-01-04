@@ -82,8 +82,7 @@ export class CreateComponent implements OnInit {
 
   getAllMembers(){
     this.userService.getAllUsers(1, 1000).subscribe((res: any) => {
-      console.log(res)
-      const filterData = res.users.filter(user => user._id !== this.userDetails._id)
+      const filterData = res.users.filter(user => user._id !== this.userDetails._id && user.isDeleted === false);
       this.members = filterData;
     })
   }

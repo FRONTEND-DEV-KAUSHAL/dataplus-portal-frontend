@@ -5,6 +5,7 @@ import { IconService } from '@ant-design/icons-angular';
 import { UserService } from '../../../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CalendarOutline } from '@ant-design/icons-angular/icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-edit',
@@ -22,7 +23,7 @@ export class EditComponent {
   roles = ['Admin', 'User', "SuperAdmin"];
   userDetails = JSON.parse(localStorage.getItem('user'));
 
-  constructor(private fb: FormBuilder,  private iconService: IconService, private userService: UserService,   private route: ActivatedRoute, private router: Router,) {
+  constructor(private fb: FormBuilder,  private iconService: IconService, private userService: UserService,   private route: ActivatedRoute, private router: Router,private modalService: NgbModal) {
     this.iconService.addIcon(...[CalendarOutline])
   }
 
@@ -37,6 +38,7 @@ export class EditComponent {
       phone: ['', Validators.required],
       role: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      isDeleted: ['', [Validators.required]],
     });
   }
 
@@ -55,6 +57,16 @@ export class EditComponent {
     this.userService.getUserById(this.editUserId).subscribe((data: any) => {
       const user = data;
       this.editUserForm.patchValue(user);
+    });
+  }
+
+  open(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
+
+  deleteItem() {
+    this.userService.deleteUser(this.editUserId).subscribe((res: any) => {
+      this.router.navigateByUrl('/users');
     });
   }
 }

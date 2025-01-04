@@ -114,7 +114,7 @@ export class EditComponent implements OnInit {
         .filter(member => member.permissions.canAddUsers === true)
         .map(member => member.user);
 
-      if(project.members.some(member => member.role === "Client")){
+      if(project.members.some(member => member.role === "Client") || this.userDetails.role === "SuperAdmin") {
         this.editPermission = true;
       }
     });
@@ -131,9 +131,8 @@ export class EditComponent implements OnInit {
   }
   getAllMembers(){
     this.userService.getAllUsers(1, 1000).subscribe((res: any) => {
-      const filterData = res.users.filter(user => user._id !== this.userDetails._id)
+      const filterData = res.users.filter(user => user._id !== this.userDetails._id && user.isDeleted === false);
       this.members = filterData;
-
     })
   }
 }

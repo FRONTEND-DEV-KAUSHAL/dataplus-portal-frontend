@@ -10,6 +10,7 @@
         <th scope="col">Email</th>
         <th scope="col">Phone</th>
         <th scope="col">Role</th>
+        <th scope="col">Status</th>
         <th scope="col">Actions</th>
       </tr>
       </thead>
@@ -20,6 +21,7 @@
             <td>{{ project.email }}</td>
             <td>{{ project.phone }}</td>
             <td>{{ project.role }}</td>
+            <td>{{ project.isDeleted ? "Deleted" : "Active"}}</td>
             <td>
               <!-- Action Dropdown -->
               <div ngbDropdown class="d-inline-block">
@@ -32,6 +34,9 @@
                 <div ngbDropdownMenu>
                   <button class="dropdown-item" [routerLink]="'/users/edit/'+project._id">
                     <i antIcon type="edit" theme="outline"></i> Edit
+                  </button>
+                  <button class="dropdown-item" (click)="open(deleteModal);selectedItemToDelete=project._id">
+                    <i antIcon type="delete" theme="outline"></i> Delete
                   </button>
 <!--                  <button class="dropdown-item" (click)="open(deleteModal); selectedItemToDelete = project._id">-->
 <!--                    <i antIcon type="delete" theme="outline"></i> Delete-->

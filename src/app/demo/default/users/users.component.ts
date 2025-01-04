@@ -46,11 +46,10 @@ export class UsersComponent {
   }
 
   deleteItem() {
-    return
-    // this.userService.deleteProject(this.selectedItemToDelete).subscribe((res: any) => {
-    //   this.page = 1;
-    //   this.loadData();
-    // });
+    this.userService.deleteUser(this.selectedItemToDelete).subscribe((res: any) => {
+      this.page = 1;
+      this.loadData();
+    });
     // Implement delete logic here
   }
 }
