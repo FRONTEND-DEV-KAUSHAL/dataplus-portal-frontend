@@ -1,0 +1,23 @@
+.avatar {
+  width: 32px;
+  height: 32px;
+}
+.avatar-initial {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+.comments-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+.bg-purple{
+  background-color: purple;
+}
+.custom_tab_container{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}

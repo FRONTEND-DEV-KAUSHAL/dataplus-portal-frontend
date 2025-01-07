@@ -31,7 +31,7 @@ export class TasksComponent implements OnInit {
   totalTasks = 0;
   selectedItemToDelete: string = '';
   // Status options
-  statuses: string[] = ['Pending', 'In Progress', 'Completed'];
+  statuses: string[] = ['Open', 'In Progress', 'Needs Work', 'On Hold', 'To Be Tested','Closed'];
   userDetails = JSON.parse(localStorage.getItem('user'));
   priorities: string[] = ['High', 'Medium', 'Low'];
 

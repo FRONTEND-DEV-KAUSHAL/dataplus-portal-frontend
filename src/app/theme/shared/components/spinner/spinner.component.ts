@@ -17,7 +17,7 @@ export class SpinnerComponent implements OnDestroy {
   isSpinnerVisible = true;
   Spinkit = Spinkit;
   @Input() backgroundColor = '#1890ff';
-  @Input() spinner = Spinkit.skLine;
+  @Input() spinner = Spinkit.skDoubleBounce;
 
   // Constructor
   constructor(

@@ -41,7 +41,11 @@
         <tbody class="text-gray-700 text-sm">
           @for (task of tasks; track task) {
             <tr>
-              <td>{{ task.name }}</td>
+              <td>
+                <a class="link-opacity-100" [routerLink]="'/tasks/view/'+task._id">
+                  {{ task.name }}
+                </a>
+              </td>
               <td>{{ task.project.name }}</td>
               <td>{{ task.description }}</td>
               <td>
@@ -101,9 +105,12 @@
                       <div
                         style="width: 10px; height: 10px; border-radius: 50%; margin-right: 8px;"
                         [ngClass]="{
-          'bg-success': task.status === 'Completed',
-          'bg-warning': task.status === 'In Progress',
-          'bg-danger': task.status === 'Pending'
+         'bg-success': task.status === 'Open',
+            'bg-warning': task.status === 'In Progress',
+            'bg-danger': task.status === 'Closed',
+            'bg-info': task.status === 'On Hold',
+            'bg-primary': task.status === 'To Be Tested',
+            'bg-purple': task.status === 'Needs Work'
         }"
                       ></div>
                       {{ task.status }}
@@ -121,10 +128,13 @@
                         <div
                           style="width: 10px; height: 10px; border-radius: 50%; margin-right: 8px;"
                           [ngClass]="{
-            'bg-success': status === 'Completed',
-            'bg-warning': status === 'In Progress',
-            'bg-danger': status === 'Pending'
-          }"
+                            'bg-success': status === 'Open',
+                            'bg-warning': status === 'In Progress',
+                            'bg-danger': status === 'Closed',
+                            'bg-info': status === 'On Hold',
+                            'bg-primary': status === 'To Be Tested',
+                            'bg-purple': status === 'Needs Work'
+                          }"
                         ></div>
                         {{ status }}
                       </button>

@@ -26,9 +26,9 @@
             <div class="form-group">
               <label class="form-label">Status</label>
               <select class="form-select" formControlName="status">
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
+                @for(status of ['Open', 'In Progress', 'Needs Work', 'On Hold', 'To Be Tested','Closed']; track $index){
+                  <option [value]="status">{{status}}</option>
+                }
               </select>
               @if (editTaskForm.get('status')?.invalid && editTaskForm.get('status')?.touched) {
                 <div class="text-danger">

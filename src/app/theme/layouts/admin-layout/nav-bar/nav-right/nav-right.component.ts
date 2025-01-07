@@ -145,6 +145,13 @@ export class NavRightComponent implements OnInit {
     })
   }
 
+  bulkReadNotification(){
+    const IDs = this.notificationList.filter((notification) => notification.isRead === false).map((notification) => notification._id);
+    if(!IDs.length) return;
+    this.notificationService.readNotification({notificationIds: IDs}).subscribe((res) => {
+      this.getNotifications()
+    })
+  }
   logout(){
     this.router.navigate(['/login']);
     localStorage.clear();

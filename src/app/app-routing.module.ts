@@ -51,6 +51,10 @@ const routes: Routes = [
         loadComponent: () => import('./demo/default/tasks/edit/edit.component').then((c) => c.EditComponent)
       },
       {
+        path: 'tasks/view/:id',
+        loadComponent: () => import('./demo/default/tasks/view/view.component').then((c) => c.ViewComponent)
+      },
+      {
         path: 'projects',
         loadComponent: () => import('./demo/default/projects/projects.component').then((c) => c.ProjectsComponent)
       },

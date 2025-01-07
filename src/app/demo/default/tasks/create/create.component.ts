@@ -10,11 +10,21 @@ import { FileChangeEvent } from '@angular/compiler-cli/src/perform_watch';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { UserService } from '../../../../services/user.service';
+import { SharedModule } from '../../../../theme/shared/shared.module';
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [FormsModule, NgbDatepickerModule, ReactiveFormsModule, CardComponent, IconModule, NgbDropdownModule, NgSelectComponent],
+  imports: [
+    FormsModule,
+    NgbDatepickerModule,
+    ReactiveFormsModule,
+    CardComponent,
+    IconModule,
+    NgbDropdownModule,
+    NgSelectComponent,
+    SharedModule
+  ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -28,7 +38,7 @@ export class CreateComponent implements OnInit {
   selectedMembers: string[] = [];
   selectedPermitedUsers: string[] = [];
   userDetails = JSON.parse(localStorage.getItem('user'));
-
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -56,6 +66,7 @@ export class CreateComponent implements OnInit {
 
   onSubmit(): void {
     this.formSubmitted = true;
+    this.isLoading = true;
 
     // Check if the form is valid
     if (this.createTaskForm.valid) {
@@ -64,7 +75,7 @@ export class CreateComponent implements OnInit {
       const members = allUsers.map((user: any) => ({
         user: user._id,
         permissions: { canAddUsers: this.selectedPermitedUsers.includes(user) },
-        role : this.selectedPermitedUsers.includes(user) ? 'Manager' : "Developer"
+        role: this.selectedPermitedUsers.includes(user) ? 'Manager' : 'Developer'
       }));
 
       const formValue = {
@@ -87,10 +98,10 @@ export class CreateComponent implements OnInit {
           const dueDate = formValue[key];
           const formattedDate = new Date(dueDate.year, dueDate.month - 1, dueDate.day).toISOString();
           formPayload.append('dueDate', formattedDate);
-        } else if(key==='members') {
+        } else if (key === 'members') {
           formValue[key].forEach((item: any) => {
             formPayload.append('members', JSON.stringify(item));
-          })
+          });
         } else {
           // Append other fields
           formPayload.append(key, formValue[key]);
@@ -104,6 +115,9 @@ export class CreateComponent implements OnInit {
         },
         (error) => {
           console.error('Error Creating Task:', error);
+        },
+        () => {
+          this.isLoading = false;
         }
       );
     } else {
@@ -121,10 +135,10 @@ export class CreateComponent implements OnInit {
     const file = event.target.files[0];
     this.selectedDocuments.push(file);
   }
-  getAllMembers(){
+  getAllMembers() {
     this.userService.getAllUsers(1, 1000).subscribe((res: any) => {
-      const filterData = res.users.filter(user => user._id !== this.userDetails._id && user.isDeleted === false);
+      const filterData = res.users.filter((user) => user._id !== this.userDetails._id && user.isDeleted === false);
       this.members = filterData;
-    })
+    });
   }
 }
