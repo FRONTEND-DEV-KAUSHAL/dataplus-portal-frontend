@@ -11,6 +11,7 @@ import { environment } from '../../../../../environments/environment';
 import { ProjectService } from '../../../../services/project.service';
 import { UserService } from '../../../../services/user.service';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { FileUploadModalComponent } from '../../../ui-component/file-upload-modal/file-upload-modal.component';
 
 @Component({
   selector: 'app-edit',
@@ -52,23 +53,22 @@ export class EditComponent implements OnInit {
     private userService: UserService
   ) {
     this.iconService.addIcon(...[CalendarOutline]);
+    this.editTaskForm = this.fb.group({
+      name: ['', Validators.required],
+      status: ['', Validators.required],
+      description: [''],
+      priority: ['', Validators.required],
+      dueDate: ['', Validators.required],
+      completedAt: [null],
+      project: ['', Validators.required],
+      document: ['']
+    });
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.taskId = params.get('id') || '';
       this.getTaskDetails();
-    });
-
-    this.editTaskForm = this.fb.group({
-      name: ['', Validators.required],
-      status: ['', Validators.required],
-      description: ['', Validators.required],
-      priority: ['', Validators.required],
-      dueDate: [null, Validators.required],
-      completedAt: [''],
-      project: ['', Validators.required],
-      document: [null]
     });
     this.getProjectList();
     this.getAllMembers();
@@ -100,7 +100,7 @@ export class EditComponent implements OnInit {
       } else if (key !== 'document') {
         formPayload.append(key, this.editTaskForm.value[key]);
       }
-      if (key === 'completedAt') {
+      if (this.editTaskForm.value.completedAt !== null && key === 'completedAt') {
         const completedAt = this.editTaskForm.value['completedAt'];
         const formattedDate = new Date(completedAt.year, completedAt.month - 1, completedAt.day).toISOString();
         formPayload.append('completedAt', formattedDate);
@@ -164,11 +164,11 @@ export class EditComponent implements OnInit {
           month: new Date(res.dueDate).getMonth() + 1,
           day: new Date(res.dueDate).getDate() + 1
         },
-        completedAt: {
+        ...(res.completedAt && {completedAt: {
           year: new Date(res.completedAt).getFullYear(),
           month: new Date(res.completedAt).getMonth() + 1,
           day: new Date(res.completedAt).getDate() + 1
-        },
+        }}),
         project: res.project._id
       });
       this.selectedMembers = res.members
@@ -182,6 +182,8 @@ export class EditComponent implements OnInit {
       this.comments = res.comments || [];
       console.log(this.comments);
     });
+    // this.editTaskForm.updateValueAndValidity();
+    console.log(this.editTaskForm);
   }
 
   getProjectList() {
@@ -224,6 +226,11 @@ export class EditComponent implements OnInit {
       const formData = new FormData();
       for(let k in newCommentData){
         formData.append(k, newCommentData[k]);
+        if(k === 'file'){
+          newCommentData[k].forEach((element: any) => {
+            formData.append(k, element);
+          })
+        }
       }
 
       this.taskService.addComment(this.taskId, formData).subscribe((res: any) => {
@@ -264,6 +271,22 @@ export class EditComponent implements OnInit {
     }
   }
 
+  openFileUploadModal(type: "Task" | 'Comment') {
+    const modalRef = this.modalService.open(FileUploadModalComponent, { size: 'lg' });
+    modalRef.result.then(
+      (result: File[]) => {
+        if(type === 'Task'){
+          this.selectedDocuments = result;
+        } else {
+          this.newComment.file = result;
+        }
+      },
+      () => {
+        console.log('Modal dismissed');
+      }
+    );
+  }
+
   disableFields(){
     const roles = {
       admin: [],
@@ -278,4 +301,6 @@ export class EditComponent implements OnInit {
       ]
     }
   }
+
+  protected readonly console = console;
 }

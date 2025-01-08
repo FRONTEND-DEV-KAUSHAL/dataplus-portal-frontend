@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgbDatepickerModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CardComponent } from '../../../../theme/shared/components/card/card.component';
 import { IconModule, IconService } from '@ant-design/icons-angular';
 import { CalendarOutline } from '@ant-design/icons-angular/icons';
 import { TaskService } from '../../../../services/task.service';
 import { ProjectService } from '../../../../services/project.service';
-import { FileChangeEvent } from '@angular/compiler-cli/src/perform_watch';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { UserService } from '../../../../services/user.service';
 import { SharedModule } from '../../../../theme/shared/shared.module';
+import { FileUploadModalComponent } from '../../../ui-component/file-upload-modal/file-upload-modal.component';
 
 @Component({
   selector: 'app-create',
@@ -38,7 +38,7 @@ export class CreateComponent implements OnInit {
   selectedMembers: string[] = [];
   selectedPermitedUsers: string[] = [];
   userDetails = JSON.parse(localStorage.getItem('user'));
-  isLoading = false;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -46,7 +46,8 @@ export class CreateComponent implements OnInit {
     private taskService: TaskService,
     private projectService: ProjectService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private modalService: NgbModal
   ) {
     this.iconService.addIcon(...[CalendarOutline]);
   }
@@ -140,5 +141,18 @@ export class CreateComponent implements OnInit {
       const filterData = res.users.filter((user) => user._id !== this.userDetails._id && user.isDeleted === false);
       this.members = filterData;
     });
+  }
+
+  openFileUploadModal(){
+    this.isLoading = false;
+    const modalRef = this.modalService.open(FileUploadModalComponent, { size: 'lg' });
+    modalRef.result.then(
+      (result: File[]) => {
+        this.selectedDocuments = result;
+      },
+      () => {
+        console.log('Modal dismissed');
+      }
+    );
   }
 }

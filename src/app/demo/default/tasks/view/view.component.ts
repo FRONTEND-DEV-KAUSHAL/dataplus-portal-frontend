@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgbDropdown, NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdown, NgbDropdownModule, NgbModal, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../../../environments/environment';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TaskService } from '../../../../services/task.service';
+import { FileUploadModalComponent } from '../../../ui-component/file-upload-modal/file-upload-modal.component';
 
 @Component({
   selector: 'app-view',
@@ -27,7 +28,8 @@ export class ViewComponent implements OnInit {
   userDetails: any = JSON.parse(localStorage.getItem('user'));
   constructor(
     private route: ActivatedRoute,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private modalService: NgbModal,
   ) {}
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -70,6 +72,11 @@ export class ViewComponent implements OnInit {
       const formData = new FormData();
       for (let k in newCommentData) {
         formData.append(k, newCommentData[k]);
+        if(k === 'file'){
+          newCommentData[k].forEach((element: any) => {
+            formData.append(k, element);
+          })
+        }
       }
 
       this.taskService.addComment(this.taskId, formData).subscribe((res: any) => {
@@ -107,5 +114,17 @@ export class ViewComponent implements OnInit {
       this.newComment.file = file;
       console.log('Comment file uploaded:', file);
     }
+  }
+
+  openFileUploadModal() {
+    const modalRef = this.modalService.open(FileUploadModalComponent, { size: 'lg' });
+    modalRef.result.then(
+      (result: File[]) => {
+          this.newComment.file = result;
+      },
+      () => {
+        console.log('Modal dismissed');
+      }
+    );
   }
 }

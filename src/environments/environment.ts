@@ -10,7 +10,7 @@ export const environment = {
   encryptionKey: 'KrO6sQqHylVSnBYaj8VQvyVOBIfzaiTG',
   encryptionKeyIV: 'Px3mtJzqZ5Smt3wdeaVQVOgLDcanGGEP',
   apiUrl: 'http://localhost:5000/api',
-  fileBaseUrl: 'http://localhost:5000/uploads',
+  fileBaseUrl: 'http://localhost:5000/api/uploads',
 };
 
 /*

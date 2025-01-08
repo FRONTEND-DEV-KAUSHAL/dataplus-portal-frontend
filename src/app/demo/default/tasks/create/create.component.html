@@ -153,16 +153,9 @@
             <div class="col-12">
               <div class="form-group">
                 <label class="form-label">Document/Image</label>
-                <input
-                  type="file"
-                  class="form-control"
-                  (change)="handleFileUpload($event)"
-                />
-                @if(createTaskForm.get('document')?.invalid && createTaskForm.get('document')?.touched){
-                  <div class="text-danger">
-                    Document/Image is required.
-                  </div>
-                }
+                <div>
+                  <button class="btn btn-primary" type="button" (click)="openFileUploadModal()">Upload Document/Image</button>
+                </div>
               </div>
             </div>
           </div>

@@ -178,29 +178,97 @@
                       }
                     </div>
                     <!-- New Comment Form -->
-                    <div class="mb-4">
+<!--                    <div class="mb-4">-->
+<!--                      <form (ngSubmit)="addComment()">-->
+<!--&lt;!&ndash;                        <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;          <textarea&ndash;&gt;-->
+<!--&lt;!&ndash;            [(ngModel)]="newComment.text"&ndash;&gt;-->
+<!--&lt;!&ndash;            name="commentText"&ndash;&gt;-->
+<!--&lt;!&ndash;            class="form-control"&ndash;&gt;-->
+<!--&lt;!&ndash;            rows="3"&ndash;&gt;-->
+<!--&lt;!&ndash;            placeholder="Write your comment here..."&ndash;&gt;-->
+<!--&lt;!&ndash;            required&ndash;&gt;-->
+<!--&lt;!&ndash;          ></textarea>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <div class="form-group mt-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                          <label for="commentFile" class="form-label">Attach a file (Optional)</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <input&ndash;&gt;-->
+<!--&lt;!&ndash;                            type="file"&ndash;&gt;-->
+<!--&lt;!&ndash;                            class="form-control"&ndash;&gt;-->
+<!--&lt;!&ndash;                            id="commentFile"&ndash;&gt;-->
+<!--&lt;!&ndash;                            (change)="handleCommentFileUpload($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;                          />&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                        <div class="textarea-container">-->
+<!--                          <textarea placeholder="Type your message..." [(ngModel)]="newComment.text"  name="commentText"></textarea>-->
+<!--                          <button type="button" (click)="openFileUploadModal()" class="attach-icon">-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" width="24px" height="24px" viewBox="-8 0 32 32" version="1.1">-->
+
+<!--                              <title>attachment</title>-->
+<!--                              <desc>Created with Sketch Beta.</desc>-->
+<!--                              <defs>-->
+
+<!--                              </defs>-->
+<!--                              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">-->
+<!--                                <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-214.000000, -153.000000)" fill="#000000">-->
+<!--                                  <path d="M228,157 L228,177 C228,180.313 225.313,183 222,183 C218.687,183 216,180.313 216,177 L216,159 C216,156.791 217.791,155 220,155 C222.209,155 224,156.791 224,159 L224,177 C224,178.104 223.104,179 222,179 C220.896,179 220,178.104 220,177 L220,161 L218,161 L218,177 C218,179.209 219.791,181 222,181 C224.209,181 226,179.209 226,177 L226,159 C226,155.687 223.313,153 220,153 C216.687,153 214,155.687 214,159 L214,178 C214.493,181.945 217.921,185 222,185 C226.079,185 229.507,181.945 230,178 L230,157 L228,157" id="attachment" sketch:type="MSShapeGroup">-->
+
+<!--                                  </path>-->
+<!--                                </g>-->
+<!--                              </g>-->
+<!--                            </svg>-->
+<!--                          </button>-->
+<!--                        </div>-->
+
+<!--                        <div class="text-right mt-3">-->
+<!--                          <button type="submit" class="btn btn-primary" [disabled]="!newComment.text.trim()">Add Comment</button>-->
+<!--                        </div>-->
+<!--                      </form>-->
+<!--                    </div>-->
+                    <div class="mt-4">
+                      <h6>Add a Comment</h6>
                       <form (ngSubmit)="addComment()">
-                        <div class="form-group">
-          <textarea
-            [(ngModel)]="newComment.text"
-            name="commentText"
-            class="form-control"
-            rows="3"
-            placeholder="Write your comment here..."
-            required
-          ></textarea>
-                        </div>
+                        <!--        <div class="form-group">-->
+                        <!--          <textarea-->
+                        <!--            [(ngModel)]="newComment.text"-->
+                        <!--            name="commentText"-->
+                        <!--            class="form-control"-->
+                        <!--            rows="3"-->
+                        <!--            placeholder="Write your comment here..."-->
+                        <!--            required-->
+                        <!--          ></textarea>-->
+                        <!--        </div>-->
 
-                        <div class="form-group mt-3">
-                          <label for="commentFile" class="form-label">Attach a file (Optional)</label>
-                          <input
-                            type="file"
-                            class="form-control"
-                            id="commentFile"
-                            (change)="handleCommentFileUpload($event)"
-                          />
-                        </div>
+                        <!--        <div class="form-group mt-3">-->
+                        <!--          <label for="commentFile" class="form-label">Attach a file (Optional)</label>-->
+                        <!--          <input-->
+                        <!--            type="file"-->
+                        <!--            class="form-control"-->
+                        <!--            id="commentFile"-->
+                        <!--            (change)="handleCommentFileUpload($event)"-->
+                        <!--          />-->
+                        <!--        </div>-->
+                        <div class="textarea-container">
+                          <textarea placeholder="Type your message..." [(ngModel)]="newComment.text"  name="commentText"></textarea>
+                          <button type="button" (click)="openFileUploadModal()" class="attach-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" width="24px" height="24px" viewBox="-8 0 32 32" version="1.1">
 
+                              <title>attachment</title>
+                              <desc>Created with Sketch Beta.</desc>
+                              <defs>
+
+                              </defs>
+                              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                                <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-214.000000, -153.000000)" fill="#000000">
+                                  <path d="M228,157 L228,177 C228,180.313 225.313,183 222,183 C218.687,183 216,180.313 216,177 L216,159 C216,156.791 217.791,155 220,155 C222.209,155 224,156.791 224,159 L224,177 C224,178.104 223.104,179 222,179 C220.896,179 220,178.104 220,177 L220,161 L218,161 L218,177 C218,179.209 219.791,181 222,181 C224.209,181 226,179.209 226,177 L226,159 C226,155.687 223.313,153 220,153 C216.687,153 214,155.687 214,159 L214,178 C214.493,181.945 217.921,185 222,185 C226.079,185 229.507,181.945 230,178 L230,157 L228,157" id="attachment" sketch:type="MSShapeGroup">
+
+                                  </path>
+                                </g>
+                              </g>
+                            </svg>
+                          </button>
+                        </div>
                         <div class="text-right mt-3">
                           <button type="submit" class="btn btn-primary" [disabled]="!newComment.text.trim()">Add Comment</button>
                         </div>
