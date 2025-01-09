@@ -75,10 +75,11 @@ export class CreateComponent implements OnInit {
 
       const members = allUsers.map((user: any) => ({
         user: user._id,
-        permissions: { canAddUsers: this.selectedPermitedUsers.includes(user) },
-        role: this.selectedPermitedUsers.includes(user) ? 'Manager' : 'Developer'
+        permissions: {
+          canAddUsers: this.selectedPermitedUsers.some((permittedUser: any) => permittedUser._id === user._id)
+        },
+        role: this.selectedPermitedUsers.some((permittedUser: any) => permittedUser._id === user._id) ? 'Manager' : 'Developer'
       }));
-
       const formValue = {
         ...this.createTaskForm.value,
         document: this.selectedDocuments, // Include selected documents
